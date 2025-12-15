@@ -1,0 +1,57 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: argotest
+  namespace: argotest
+spec:
+  replicas: 10
+
+  revisionHistoryLimit: 3
+
+  selector:
+    matchLabels:
+      app: argotest
+
+  template:
+    metadata:
+      labels:
+        app: argotest
+    spec:
+      containers:
+        - name: argotest
+          image: jfwangncs/argotest:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+
+  strategy:
+    canary:
+      stableService: argotest-stable
+      canaryService: argotest-canary
+
+      trafficRouting:
+        nginx:
+          stableIngress: argotest-ingress
+
+      steps:
+        # 20% —— 手动确认
+        - setWeight: 20
+        - pause: {} # 手动继续
+
+        # 40% —— 自动 3 分钟
+        - setWeight: 40
+        - pause:
+            duration: 3m
+
+        # 60%
+        - setWeight: 60
+        - pause:
+            duration: 3m
+
+        # 80%
+        - setWeight: 80
+        - pause:
+            duration: 3m
+
+        # 100%
+        - setWeight: 100
