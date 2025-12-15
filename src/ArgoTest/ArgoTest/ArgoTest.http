@@ -1,0 +1,6 @@
+@ArgoTest_HostAddress = http://localhost:5017
+
+GET {{ArgoTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
