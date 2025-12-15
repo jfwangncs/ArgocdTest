@@ -22,23 +22,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/argotest
-          tags: |
-            type=ref,event=branch
-            type=sha,prefix={{branch}}-
-            type=raw,value=latest,enable={{is_default_branch}}
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: ./src/ArgoTest
           file: ./src/ArgoTest/ArgoTest/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/argotest:${{ github.run_number }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/argotest:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
