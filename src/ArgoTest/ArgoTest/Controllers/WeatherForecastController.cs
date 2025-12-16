@@ -14,7 +14,7 @@ namespace ArgoTest.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public String Get()
         {
-            return "V1";
+            return "V2";
             
         }
     }
