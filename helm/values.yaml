@@ -45,19 +45,21 @@ rollout:
   strategy:
     canary:
       steps:
-        # 20% with manual confirmation
+        # 20% traffic
         - setWeight: 20
-          pause: true
-        # 40% automatic after 3 minutes
+        # Manual confirmation required
+        - pause: {}
+        # 40% traffic
         - setWeight: 40
-          pauseDuration: 3m
-        # 60%
+        # Auto continue after 3 minutes
+        - pauseDuration: 3m
+        # 60% traffic
         - setWeight: 60
-          pauseDuration: 3m
-        # 80%
+        - pauseDuration: 3m
+        # 80% traffic
         - setWeight: 80
-          pauseDuration: 3m
-        # 100%
+        - pauseDuration: 3m
+        # 100% traffic - full rollout
         - setWeight: 100
 
 # Container configuration

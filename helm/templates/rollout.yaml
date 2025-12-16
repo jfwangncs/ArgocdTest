@@ -41,11 +41,12 @@ spec:
           stableIngress: {{ include "argotest.fullname" . }}-ingress
       steps:
         {{- range .Values.rollout.strategy.canary.steps }}
+        {{- if .setWeight }}
         - setWeight: {{ .setWeight }}
-          {{- if .pause }}
-          pause: {}
-          {{- else if .pauseDuration }}
-          pause:
+        {{- else if .pause }}
+        - pause: {{ toYaml .pause | nindent 10 }}
+        {{- else if .pauseDuration }}
+        - pause:
             duration: {{ .pauseDuration }}
-          {{- end }}
+        {{- end }}
         {{- end }}
