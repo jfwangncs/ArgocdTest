@@ -1,0 +1,72 @@
+# Default values for argotest
+nameOverride: ""
+fullnameOverride: ""
+
+# Namespace configuration
+namespace:
+  name: argotest
+  create: true
+
+# Image configuration
+image:
+  repository: jfwangncs/argotest
+  tag: v5
+  pullPolicy: Always
+
+# Rollout configuration
+replicaCount: 2
+revisionHistoryLimit: 3
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+# Ingress configuration
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    cert-manager.io/cluster-issuer: letsencrypt-http
+  host: argotest.xiaofengyu.com
+  tls:
+    enabled: true
+    secretName: argotest-tls
+
+# Argo Rollouts configuration
+rollout:
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: argotest=jfwangncs/argotest
+    argocd-image-updater.argoproj.io/argotest.update-strategy: latest
+
+  strategy:
+    canary:
+      steps:
+        # 20% with manual confirmation
+        - setWeight: 20
+          pause: true
+        # 40% automatic after 3 minutes
+        - setWeight: 40
+          pauseDuration: 3m
+        # 60%
+        - setWeight: 60
+          pauseDuration: 3m
+        # 80%
+        - setWeight: 80
+          pauseDuration: 3m
+        # 100%
+        - setWeight: 100
+
+# Container configuration
+containerPort: 8080
+# Resources (optional, uncomment to use)
+# resources:
+#   limits:
+#     cpu: 500m
+#     memory: 512Mi
+#   requests:
+#     cpu: 250m
+#     memory: 256Mi
