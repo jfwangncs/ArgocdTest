@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: argotest
-          image: jfwangncs/argotest:v1
+          image: jfwangncs/argotest:v5
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
