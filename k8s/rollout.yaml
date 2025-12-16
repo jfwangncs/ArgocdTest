@@ -3,8 +3,11 @@ kind: Rollout
 metadata:
   name: argotest
   namespace: argotest
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: argotest=jfwangncs/argotest
+    argocd-image-updater.argoproj.io/argotest.update-strategy: latest
 spec:
-  replicas: 10
+  replicas: 2
 
   revisionHistoryLimit: 3
 
@@ -19,7 +22,7 @@ spec:
     spec:
       containers:
         - name: argotest
-          image: jfwangncs/argotest:latest
+          image: jfwangncs/argotest:v1
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

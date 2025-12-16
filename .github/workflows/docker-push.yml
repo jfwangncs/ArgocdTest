@@ -29,7 +29,7 @@ jobs:
           file: ./src/ArgoTest/ArgoTest/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/argotest:${{ github.run_number }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/argotest:v${{ github.run_number }}
             ${{ secrets.DOCKERHUB_USERNAME }}/argotest:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
