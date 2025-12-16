@@ -1,5 +1,12 @@
-var builder = WebApplication.CreateBuilder(args);
+using NLog; 
+using NLog.Web;
 
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+logger.Debug("init main");
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.WebHost.UseNLog();
 // Add services to the container.
 
 builder.Services.AddControllers();
