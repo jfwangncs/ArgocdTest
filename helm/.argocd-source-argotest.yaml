@@ -4,5 +4,5 @@ helm:
     value: jfwangncs/argotest
     forcestring: true
   - name: image.tag
-    value: v10
+    value: v11
     forcestring: true
