@@ -43,8 +43,8 @@ spec:
         {{- range .Values.rollout.strategy.canary.steps }}
         {{- if .setWeight }}
         - setWeight: {{ .setWeight }}
-        {{- else if .pause }}
-        - pause: {{ toYaml .pause | nindent 10 }}
+        {{- else if hasKey . "pause" }}
+        - pause: {{- if .pause }} {{ toYaml .pause | nindent 10 }}{{- else }} {}{{- end }}
         {{- else if .pauseDuration }}
         - pause:
             duration: {{ .pauseDuration }}
