@@ -10,7 +10,7 @@ namespace:
 # Image configuration
 image:
   repository: jfwangncs/argotest
-  tag: v5
+  tag: v17
   pullPolicy: Always
 
 # Rollout configuration
