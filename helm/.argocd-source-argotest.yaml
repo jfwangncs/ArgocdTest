@@ -1,8 +1,0 @@
-helm:
-  parameters:
-  - name: image.name
-    value: jfwangncs/argotest
-    forcestring: true
-  - name: image.tag
-    value: v17
-    forcestring: true
