@@ -39,15 +39,3 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/argotest:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      - name: Update Helm values.yaml with new tag
-        run: |
-          sed -i "s/tag: v[0-9]\+/tag: v${{ github.run_number }}/" helm/values.yaml
-
-      - name: Commit and push updated values.yaml
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add helm/values.yaml
-          git commit -m "ci update new version [skip ci]"
-          git push origin HEAD:master
