@@ -18,7 +18,7 @@ namespace ArgoTest.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public async Task<String> Get()
         {
-            var version = "V26";
+            var version = "V27";
             var startTime = DateTime.UtcNow;
             await Task.Delay(new Random().Next(1000));
             var endTime = DateTime.UtcNow;
