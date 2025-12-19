@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace ArgoTest.Controllers
@@ -17,7 +18,7 @@ namespace ArgoTest.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public async Task<String> Get()
         {
-            var version = "V24";
+            var version = "V25";
             var startTime = DateTime.UtcNow;
             await Task.Delay(new Random().Next(1000));
             var endTime = DateTime.UtcNow;
@@ -29,9 +30,9 @@ namespace ArgoTest.Controllers
                 Name = "希望",
                 Organization = org,
                 Team = new List<Team>() { new Team { Organization = org, Tag = ["x", "y", "z"] },
-                new Team { Organization = new Organization() { Name = "WB",            Tag = new List<string>() { "o", "跑", "大打" } }, Tag = ["！@#", "大家", "大打"] } }
+                new Team { Organization = new Organization() { Name = "WB",Tag = new List<string>() { "o", "跑", "大打" } }, Tag = ["！@#", "大家", "大打"] } }
             };
-            _logger.LogInformation("Version:{Version},Log:{Log},Duration:{Duration},User:{User}", version, "测试", duration, user);
+            _logger.LogInformation("Version:{Version},Log:{Log},Duration:{Duration},User:{User}", version, "测试", duration, JsonConvert.SerializeObject(user));
             return version;
 
         }
