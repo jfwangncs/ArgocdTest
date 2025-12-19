@@ -18,7 +18,7 @@ namespace ArgoTest.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public async Task<String> Get()
         {
-            var version = "V25";
+            var version = "V26";
             var startTime = DateTime.UtcNow;
             await Task.Delay(new Random().Next(1000));
             var endTime = DateTime.UtcNow;
@@ -32,7 +32,7 @@ namespace ArgoTest.Controllers
                 Team = new List<Team>() { new Team { Organization = org, Tag = ["x", "y", "z"] },
                 new Team { Organization = new Organization() { Name = "WB",Tag = new List<string>() { "o", "跑", "大打" } }, Tag = ["！@#", "大家", "大打"] } }
             };
-            _logger.LogInformation("Version:{Version},Log:{Log},Duration:{Duration},User:{User}", version, "测试", duration, JsonConvert.SerializeObject(user));
+            _logger.LogInformation("Version:{Version},Log:{Log},Duration:{Duration},User:{@User}", version, "测试", duration, user);
             return version;
 
         }
